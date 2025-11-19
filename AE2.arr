@@ -17,7 +17,7 @@ penguines-table =
     sanitize sex using string-sanitizer
     sanitize year using num-sanitizer
   end
-#Scalar processing
+#Scalar processing, Question: What is the average body mass of Adelie penguins?
 #Function to calculate average body mass for a given species
 fun average-body-mass-by-species(species-name :: String) -> Number:
   doc: "Calculate the average body mass for penguins of a given species"
@@ -44,8 +44,28 @@ chinstrap-avg = average-body-mass-by-species("Chinstrap")
 #Why is this transformation?: Taking each penguin record and creating a modified version with a converted measurment. The list stays the same length, one transformed penguin for each original penguin.
 
 #Concrete Examples:
-Penguin 1: Adelie, body_mass = 3750g
-Penguin 2: Adelie, body_mass = 3800
-Penguin 3: Adelie, body_mass = 3750g
+#Penguin 1: Adelie, body_mass = 3750g
+#Penguin 2: Adelie, body_mass = 3800
+#Penguin 3: Adelie, body_mass = 3750g
 
 #Converting body mass: Divide grams by 1000 to get kilograms
+# Function to convert body mass from grams to kilograms
+fun body-mass-to-kg(penguin-row) -> Row:
+  doc: "Convert a penguin's body mass from grams to kg"
+  penguin-row.update("body-mass", penguin-row["body-mass"] / 1000)
+end
+
+fun transform-to-kilograms(species-name :: String) -> Table:
+  doc: "Transform all penguins of a given species to have body mass in kg"
+  #Filter for the specified species
+  species-penguins = filter-with(penguines-table, 
+    lam(row): row["species"] == species-name end)
+  #Tranform each row using map 
+  transformed-rows = map(body-mass-to-kg, species-penguins.allrows())
+  transformed-rows
+where: #Testing with examples
+  test-penguin = penguines-table.row-n(0)
+  transformed = body-mass-to-kg(test-penguin)
+  transformed["body-mass"] is-roughly (test-penguin["body mass"] / 1000)
+end
+  
