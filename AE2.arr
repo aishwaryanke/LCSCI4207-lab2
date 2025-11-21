@@ -43,14 +43,10 @@ chinstrap-avg = average-body-mass-by-species("Chinstrap")
 #Problem analysis, Question: How can we convert all penguin body masses from grams to kilograms for easier interpretation?
 #Input: A list of penguin rows with body mass in grams
 #Output: A list of penguin rows where body mass is now in kilograms
-#Why is this transformation?: Taking each penguin record and creating a modified version with a converted measurment. The list stays the same length, one transformed penguin for each original penguin.
 
-#Concrete Examples:
-#Penguin 1: Adelie, body_mass = 3750g
-#Penguin 2: Adelie, body_mass = 3800
-#Penguin 3: Adelie, body_mass = 3750g
-
+#Concrete Exampleson document
 #Converting body mass: Divide grams by 1000 to get kilograms
+
 # Function to convert body mass from grams to kilograms
 fun grams-to-kg(grams :: Number) -> Number:
   doc: "Convert a penguin's body mass from grams to kg"
@@ -76,6 +72,7 @@ end
 #Question: Which penguins are "extreme athletes" meaning in the top 10% for both flipper length and body mass within their species?
 #Input: Full penguin dataset
 #Output: A filtered subset conataining only the elite penguins who excel in both measurements
+
 #filtering the dataset to eep only rows that meet multiple criteria simulaneously 
 
 #Exampls in google docs
@@ -117,7 +114,7 @@ extreme-species("Gentoo")
 #Question: What are the lightest and heaviest penguins for a specific species, found in a single pass through the data?
 #Input: Penguin table filtered by species
 #Output: A record containing both the minimum nd maximum body mass like {min: 2850, max: 4775}
-#How is it accumulation: Building up (accumulating) our results as we process each penguin. Starting with originial min/max values, and update them as we go through the penguins masses. Tracking both vaalues simultaneosly, different to scalar processing which might just return 1 value, here Ill show the accumulation pattern.
+
 
 
 fun min-max-mass(species-name :: String) -> {min :: Number, max :: Number}:
